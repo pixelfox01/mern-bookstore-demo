@@ -38,28 +38,33 @@ const ShowBook = () => {
         </div>
       ) : (
         <div className="flex justify-center">
-          <dl className="border border-sky-600 rounded-md py-12 w-1/2 flex flex-col gap-2">
-            <div className="flex gap-3">
-              <dt className="font-semibold min-w-[40%] flex items-center justify-end">
-                Title
-              </dt>
-              <dd>{book?.title}</dd>
-            </div>
+          <div className="border border-slate-600 rounded-md py-8 max-w-[50%] min-w-[30%] flex flex-col items-center">
+            <h1 className="font-semibold text-lg tracking-wide uppercase mb-4">
+              Book Details
+            </h1>
+            <dl className="flex flex-col gap-2 w-full">
+              <div className="flex gap-3">
+                <dt className="font-semibold min-w-[40%] flex items-center justify-end">
+                  Title
+                </dt>
+                <dd className="w-full">{book?.title}</dd>
+              </div>
 
-            <div className="flex gap-3">
-              <dt className="font-semibold min-w-[40%] flex items-center justify-end">
-                Author
-              </dt>
-              <dd>{book?.author}</dd>
-            </div>
+              <div className="flex gap-3">
+                <dt className="font-semibold min-w-[40%] flex items-center justify-end">
+                  Author
+                </dt>
+                <dd className="w-full">{book?.author}</dd>
+              </div>
 
-            <div className="flex gap-3">
-              <dt className="font-semibold min-w-[40%] flex items-center justify-end">
-                Publish Year
-              </dt>
-              <dd>{book?.publishYear}</dd>
-            </div>
-          </dl>
+              <div className="flex gap-3">
+                <dt className="font-semibold min-w-[40%] flex items-center justify-end">
+                  Publish Year
+                </dt>
+                <dd className="w-full">{book?.publishYear}</dd>
+              </div>
+            </dl>
+          </div>
         </div>
       )}
     </div>
