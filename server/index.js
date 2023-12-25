@@ -6,6 +6,9 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
+const PORT = process.env.PORT;
+const DB_URL = process.env.DB_URL;
+
 const app = express();
 
 app.use(express.json());
@@ -28,11 +31,11 @@ app.get("/", (req, res) => {
 app.use("/books", booksRoute);
 
 mongoose
-  .connect(process.env.DB_URL)
+  .connect(DB_URL)
   .then(() => {
     console.log("Connected to MongoDB");
-    app.listen(process.env.PORT, () => {
-      console.log(`Server listening on port ${process.env.PORT}`);
+    app.listen(PORT, () => {
+      console.log(`Server listening on port ${PORT}`);
     });
   })
   .catch((err) => {
