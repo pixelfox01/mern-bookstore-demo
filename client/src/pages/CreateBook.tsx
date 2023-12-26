@@ -1,13 +1,43 @@
+import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
 import { useForm, type FieldValues } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import { z } from "zod";
+
+const createBookSchema = z.object({
+  title: z
+    .string({
+      required_error: "Required",
+      invalid_type_error: "Invalid title",
+    })
+    .min(1, "Must be at least 1 character")
+    .max(100, "Cannot exceed 100 characters"),
+  author: z
+    .string({
+      required_error: "Required",
+      invalid_type_error: "Invalid author",
+    })
+    .min(1, "Must be at least 1 character")
+    .max(100, "Cannot exceed 100 characters"),
+  publishYear: z
+    .number({
+      required_error: "Required",
+      invalid_type_error: "Invalid date",
+    })
+    .min(1000, "Must be after 1000")
+    .max(new Date().getFullYear(), "Must be before current year"),
+});
+
+type CreateBookFormValues = z.infer<typeof createBookSchema>;
 
 const CreateBook = () => {
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm();
+  } = useForm<CreateBookFormValues>({
+    resolver: zodResolver(createBookSchema),
+  });
 
   const navigate = useNavigate();
 
@@ -25,15 +55,15 @@ const CreateBook = () => {
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit(onSubmit)}>
+    <div className="flex justify-center">
+      <form onSubmit={handleSubmit(onSubmit)} className="w-1/3 mt-12">
         <div className="flex flex-col">
           <label htmlFor="title">Title</label>
           <input
             type="text"
             id="title"
-            className="border border-slate-600 rounded-md"
-            {...register("title", { required: "Title is required!" })}
+            className="border border-slate-600 rounded-md py-1 px-2"
+            {...register("title")}
           />
           {errors.title && (
             <span className="text-red-500">{`${errors.title.message}`}</span>
@@ -44,8 +74,8 @@ const CreateBook = () => {
           <input
             type="text"
             id="author"
-            className="border border-slate-600 rounded-md"
-            {...register("author", { required: "Author name is required" })}
+            className="border border-slate-600 rounded-md py-1 px-2"
+            {...register("author")}
           />
           {errors.author && (
             <span className="text-red-500">{`${errors.author.message}`}</span>
@@ -56,10 +86,8 @@ const CreateBook = () => {
           <input
             type="number"
             id="publishYear"
-            className="border border-slate-600 rounded-md"
-            {...register("publishYear", {
-              required: "Publish Year is required",
-            })}
+            className="border border-slate-600 rounded-md py-1 px-2 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+            {...register("publishYear")}
           />
           {errors.publishYear && (
             <span className="text-red-500">
