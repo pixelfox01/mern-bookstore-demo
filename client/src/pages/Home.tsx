@@ -14,13 +14,15 @@ interface Book {
 }
 
 const Home = () => {
+  const API_URL = import.meta.env.VITE_API_URL;
+
   const [books, setBooks] = useState([] as Book[]);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     setIsLoading(true);
     axios
-      .get("http://localhost:5000/books")
+      .get(`${API_URL}/books`)
       .then((response) => {
         setBooks(response.data.data);
         console.log(response.data.data);

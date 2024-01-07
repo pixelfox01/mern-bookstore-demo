@@ -8,6 +8,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import BackButton from "../components/BackButton";
 
 const EditBook = () => {
+  const API_URL = import.meta.env.VITE_API_URL;
+
   const { id } = useParams();
   const [isLoading, setIsLoading] = useState(false);
 
@@ -48,8 +50,9 @@ const EditBook = () => {
 
   useEffect(() => {
     setIsLoading(true);
+
     axios
-      .get(`http://localhost:5000/books/${id}`)
+      .get(`${API_URL}/books/${id}`)
       .then((response) => {
         console.log(response);
         setValue("title", response.data.title);
@@ -67,7 +70,7 @@ const EditBook = () => {
 
   const onSubmit = (data: FieldValues) => {
     axios
-      .put(`http://localhost:5000/books/${id}`, data)
+      .put(`${API_URL}/books/${id}`, data)
       .then((response) => {
         console.log(response);
         navigate("/");

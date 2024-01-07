@@ -11,6 +11,8 @@ interface Book {
 }
 
 const DeleteBook = () => {
+  const API_URL = import.meta.env.VITE_API_URL;
+
   const [book, setBook] = useState<Book | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const { id } = useParams<{ id: string }>();
@@ -20,7 +22,7 @@ const DeleteBook = () => {
   useEffect(() => {
     setIsLoading(true);
     axios
-      .get(`http://localhost:5000/books/${id}`)
+      .get(`${API_URL}/books/${id}`)
       .then((response) => {
         setBook(response.data);
         setIsLoading(false);
@@ -34,7 +36,7 @@ const DeleteBook = () => {
   const handleDelete = () => {
     setIsLoading(true);
     axios
-      .delete(`http://localhost:5000/books/${id}`)
+      .delete(`${API_URL}/books/${id}`)
       .then((response) => {
         console.log(response);
         setIsLoading(false);

@@ -32,6 +32,8 @@ const createBookSchema = z.object({
 type CreateBookFormValues = z.infer<typeof createBookSchema>;
 
 const CreateBook = () => {
+  const API_URL = import.meta.env.VITE_API_URL;
+
   const {
     register,
     handleSubmit,
@@ -44,7 +46,7 @@ const CreateBook = () => {
 
   const onSubmit = (data: FieldValues) => {
     axios
-      .post("http://localhost:5000/books", data)
+      .post(`${API_URL}/books`, data)
       .then((response) => {
         console.log(response);
         navigate("/");
